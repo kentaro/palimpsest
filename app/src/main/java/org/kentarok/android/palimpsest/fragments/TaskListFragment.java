@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
@@ -66,13 +67,26 @@ public class TaskListFragment extends ListFragment {
     }
 
     @Subscribe
-    public void onTaskCreated(TaskFormFragment.OnCreated event) {
+    public void onTaskCreated(TaskFormFragment.OnCreatedEvent event) {
         this.adapter.insert(event.task, 0);
         this.adapter.notifyDataSetInvalidated();
     }
 
     @Subscribe
-    public void onTaskUpdated(TaskFormFragment.OnUpdated event) {
+    public void onTaskUpdated(TaskFormFragment.OnUpdatedEvent event) {
         this.adapter.notifyDataSetInvalidated();
+    }
+
+    @Override
+    public void onListItemClick(ListView listView, View view, int pos, long id) {
+        Task task = this.adapter.getItem(pos);
+        BusHolder.getInstance().post(new OnListItemClickedEvent(task));
+    }
+
+    public final class OnListItemClickedEvent {
+        public Task task;
+        public OnListItemClickedEvent(Task task) {
+            this.task = task;
+        }
     }
 }

@@ -90,19 +90,24 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Subscribe
-    public void onTaskCreated(TaskFormFragment.OnCreated event) {
+    public void onTaskCreated(TaskFormFragment.OnCreatedEvent event) {
         getFragmentManager().popBackStack();
         refreshOptionsMenu(MenuType.TASK_LIST);
     }
 
     @Subscribe
-    public void onTaskUpdated(TaskFormFragment.OnUpdated event) {
+    public void onTaskUpdated(TaskFormFragment.OnUpdatedEvent event) {
         getFragmentManager().popBackStack();
         refreshOptionsMenu(MenuType.TASK_LIST);
     }
 
     @Subscribe
-    public void onTaskFormShown(TaskFormFragment.OnShown event) {
+    public void onTaskFormShown(TaskFormFragment.OnShownEvent event) {
         refreshOptionsMenu(MenuType.TASK_FORM);
+    }
+
+    @Subscribe
+    public void onListItemClicked(TaskListFragment.OnListItemClickedEvent event) {
+        switchFragmentTo((Fragment)TaskFormFragment.newInstance(event.task));
     }
 }

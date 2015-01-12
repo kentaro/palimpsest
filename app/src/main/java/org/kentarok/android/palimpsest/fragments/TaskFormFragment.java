@@ -46,7 +46,10 @@ public class TaskFormFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_task_form, container, false);
         ButterKnife.inject(this, view);
-        BusHolder.getInstance().post(new OnShown());
+        BusHolder.getInstance().post(new OnShownEvent());
+
+        titleEdit.setText(this.task.title);
+        countEdit.setText(this.task.count.toString());
 
         return view;
     }
@@ -82,21 +85,21 @@ public class TaskFormFragment extends Fragment {
         task.save();
 
         BusHolder.getInstance().post(
-                isNewObject ? new OnCreated(task) : new OnUpdated(task)
+                isNewObject ? new OnCreatedEvent(task) : new OnUpdatedEvent(task)
         );
     }
 
-    public class OnCreated {
+    public final class OnCreatedEvent {
         public Task task;
-        public OnCreated(Task task) {
+        public OnCreatedEvent(Task task) {
             this.task = task;
         }
     }
-    public class OnUpdated {
+    public final class OnUpdatedEvent {
         public Task task;
-        public OnUpdated(Task task) {
+        public OnUpdatedEvent(Task task) {
             this.task = task;
         }
     }
-    public class OnShown {}
+    public final class OnShownEvent {}
 }
