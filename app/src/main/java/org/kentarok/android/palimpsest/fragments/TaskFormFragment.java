@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import org.kentarok.android.palimpsest.R;
 import org.kentarok.android.palimpsest.models.Task;
+import org.kentarok.android.palimpsest.utils.BusHolder;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -60,5 +61,10 @@ public class TaskFormFragment extends Fragment {
         task.title = title;
         task.count = count;
         task.save();
+
+        BusHolder.getInstance().post(new OnSubmitted());
+    }
+
+    public class OnSubmitted {
     }
 }

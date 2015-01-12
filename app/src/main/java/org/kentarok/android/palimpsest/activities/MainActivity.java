@@ -6,6 +6,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.squareup.otto.Subscribe;
+
 import org.kentarok.android.palimpsest.R;
 import org.kentarok.android.palimpsest.fragments.TaskFormFragment;
 import org.kentarok.android.palimpsest.fragments.TaskListFragment;
@@ -74,5 +76,10 @@ public class MainActivity extends ActionBarActivity implements TaskListFragment.
 
     @Override
     public void onFragmentInteraction(String id) {
+    }
+
+    @Subscribe
+    public void onTaskFormSubmitted(TaskFormFragment.OnSubmitted event) {
+        getFragmentManager().popBackStack();
     }
 }
