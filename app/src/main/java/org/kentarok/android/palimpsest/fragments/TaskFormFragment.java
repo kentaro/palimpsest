@@ -12,6 +12,8 @@ import org.kentarok.android.palimpsest.R;
 import org.kentarok.android.palimpsest.models.Task;
 import org.kentarok.android.palimpsest.utils.BusHolder;
 
+import java.util.Date;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -72,6 +74,9 @@ public class TaskFormFragment extends Fragment {
 
         task.title = title;
         task.count = count;
+        if (task.createdOn == null) {
+            task.createdOn = new Date();
+        }
         task.save();
 
         BusHolder.getInstance().post(new OnSubmitted());

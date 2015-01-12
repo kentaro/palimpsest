@@ -16,6 +16,8 @@ public class Task extends Model {
     public String title;
     @Column(name = "count")
     public Integer count;
+    @Column(name = "created_on")
+    public Date createdOn;
     @Column(name = "done_on")
     public Date doneOn;
 
@@ -49,6 +51,7 @@ public class Task extends Model {
 
     public Integer currentCount() {
         Date today = new Date();
-        return this.count * (today.compareTo(this.doneOn));
+        Date before = this.doneOn == null ? this.createdOn : this.doneOn;
+        return this.count * today.compareTo(before);
     }
 }

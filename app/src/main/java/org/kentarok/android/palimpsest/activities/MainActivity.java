@@ -15,7 +15,7 @@ import org.kentarok.android.palimpsest.fragments.TaskListFragment;
 import org.kentarok.android.palimpsest.models.Task;
 import org.kentarok.android.palimpsest.utils.BusHolder;
 
-public class MainActivity extends ActionBarActivity implements TaskListFragment.OnFragmentInteractionListener {
+public class MainActivity extends ActionBarActivity {
     MenuType menuType = MenuType.TASK_LIST;
 
     @Override
@@ -25,7 +25,7 @@ public class MainActivity extends ActionBarActivity implements TaskListFragment.
 
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, TaskListFragment.newInstance("aa", "bb"))
+                    .add(R.id.container, TaskListFragment.newInstance())
                     .commit();
         }
     }
@@ -87,10 +87,6 @@ public class MainActivity extends ActionBarActivity implements TaskListFragment.
     public void onPause() {
         BusHolder.getInstance().unregister(this);
         super.onPause();
-    }
-
-    @Override
-    public void onFragmentInteraction(String id) {
     }
 
     @Subscribe
