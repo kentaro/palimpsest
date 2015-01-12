@@ -3,6 +3,12 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <CheckBox
+        android:id="@+id/task_list_item_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:focusable="false"
+        />
     <TextView
         android:id="@+id/task_list_item_title"
         android:layout_width="wrap_content"

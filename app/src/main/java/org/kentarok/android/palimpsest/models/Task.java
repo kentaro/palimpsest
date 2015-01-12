@@ -32,8 +32,9 @@ public class Task extends Model {
         this.doneOn = doneOn;
     }
 
-    public boolean isEmpty() {
-        return this.title == "";
+    public void done() {
+        this.doneOn = new Date();
+        this.save();
     }
 
     public static List<Task> taskList() {

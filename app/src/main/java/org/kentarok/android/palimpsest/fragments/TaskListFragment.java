@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -33,13 +35,27 @@ public class TaskListFragment extends ListFragment {
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 LayoutInflater inflater = LayoutInflater.from(getContext());
-                View view = inflater.inflate(R.layout.fragment_task_list_item, parent, false);
+                final View view = inflater.inflate(R.layout.fragment_task_list_item, parent, false);
 
-                Task task = getItem(position);
+                final Task task = getItem(position);
                 TextView textTitle = (TextView)view.findViewById(R.id.task_list_item_title);
                 textTitle.setText(task.title);
                 TextView textCurrentCount = (TextView)view.findViewById(R.id.task_list_item_current_count);
                 textCurrentCount.setText(task.currentCount().toString());
+
+                CheckBox checkBox = (CheckBox)view.findViewById(R.id.task_list_item_checkbox);
+                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        task.done();
+                        view.animate().setDuration(1000).alpha(0).withEndAction(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.remove(task);
+                            }
+                        });
+                    }
+                });
 
                 return view;
             }
