@@ -17,6 +17,7 @@ import java.util.Date;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import butterknife.Optional;
 
 public class TaskFormFragment extends Fragment {
     Task task;
@@ -44,7 +45,10 @@ public class TaskFormFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_task_form, container, false);
+        int resource = task.isEmpty() ? R.layout.fragment_task_form : R.layout.fragment_task_form_with_task;
+        View view = inflater.inflate(resource, container, false);
+
+        // 便利なものたち
         ButterKnife.inject(this, view);
         BusHolder.getInstance().post(new OnShownEvent());
 
@@ -70,7 +74,11 @@ public class TaskFormFragment extends Fragment {
         super.onDetach();
     }
 
-    @OnClick(R.id.task_form_button_submit)
+    @Optional
+    @OnClick({
+            R.id.task_form_button_submit_create,
+            R.id.task_form_button_submit_update
+    })
     public void submit() {
         Boolean isNewObject = false;
         String title = titleEdit.getText().toString();
@@ -89,6 +97,13 @@ public class TaskFormFragment extends Fragment {
         );
     }
 
+    @Optional
+    @OnClick(R.id.task_form_button_delete)
+    public void delete() {
+        this.task.delete();
+        BusHolder.getInstance().post(new OnDeletedEvent(this.task));
+    }
+
     public final class OnCreatedEvent {
         public Task task;
         public OnCreatedEvent(Task task) {
@@ -98,6 +113,12 @@ public class TaskFormFragment extends Fragment {
     public final class OnUpdatedEvent {
         public Task task;
         public OnUpdatedEvent(Task task) {
+            this.task = task;
+        }
+    }
+    public final class OnDeletedEvent {
+        public Task task;
+        public OnDeletedEvent(Task task) {
             this.task = task;
         }
     }

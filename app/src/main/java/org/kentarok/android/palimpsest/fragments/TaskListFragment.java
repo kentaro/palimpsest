@@ -93,6 +93,12 @@ public class TaskListFragment extends ListFragment {
         this.adapter.notifyDataSetInvalidated();
     }
 
+    @Subscribe
+    public void onTaskDeleted(TaskFormFragment.OnDeletedEvent event) {
+        this.adapter.remove(event.task);
+        this.adapter.notifyDataSetInvalidated();
+    }
+
     @Override
     public void onListItemClick(ListView listView, View view, int pos, long id) {
         Task task = this.adapter.getItem(pos);

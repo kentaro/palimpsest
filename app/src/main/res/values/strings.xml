@@ -5,7 +5,9 @@
     <string name="action_add">追加</string>
     <string name="task_form_label_title">タスク</string>
     <string name="task_form_label_count">回数</string>
-    <string name="task_form_button_submit">登録</string>
+    <string name="task_form_button_submit_create">作成</string>
+    <string name="task_form_button_submit_update">更新</string>
+    <string name="task_form_button_submit_delete">削除</string>
     <string name="task_list_empty">タスクが空っぽです</string>
 
 </resources>

@@ -102,6 +102,12 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Subscribe
+    public void onTaskDeleted(TaskFormFragment.OnDeletedEvent event) {
+        getFragmentManager().popBackStack();
+        refreshOptionsMenu(MenuType.TASK_LIST);
+    }
+
+    @Subscribe
     public void onTaskFormShown(TaskFormFragment.OnShownEvent event) {
         refreshOptionsMenu(MenuType.TASK_FORM);
     }
