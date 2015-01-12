@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -13,8 +12,7 @@ import org.kentarok.android.palimpsest.R;
 import org.kentarok.android.palimpsest.models.Task;
 
 public class TaskListFragment extends ListFragment {
-    private ArrayAdapter<Task> adapter;
-    private AbsListView listView;
+    public ArrayAdapter<Task> adapter;
 
     public static TaskListFragment newInstance() {
         TaskListFragment fragment = new TaskListFragment();
@@ -50,13 +48,5 @@ public class TaskListFragment extends ListFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
         return view;
-    }
-
-    public void setEmptyText(CharSequence emptyText) {
-        View emptyView = listView.getEmptyView();
-
-        if (emptyView instanceof TextView) {
-            ((TextView) emptyView).setText(emptyText);
-        }
     }
 }
