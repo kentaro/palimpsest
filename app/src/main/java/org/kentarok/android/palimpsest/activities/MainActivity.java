@@ -9,12 +9,14 @@ import android.view.MenuItem;
 import com.squareup.otto.Subscribe;
 
 import org.kentarok.android.palimpsest.R;
+import org.kentarok.android.palimpsest.consts.MenuType;
 import org.kentarok.android.palimpsest.fragments.TaskFormFragment;
 import org.kentarok.android.palimpsest.fragments.TaskListFragment;
 import org.kentarok.android.palimpsest.models.Task;
 import org.kentarok.android.palimpsest.utils.BusHolder;
 
 public class MainActivity extends ActionBarActivity implements TaskListFragment.OnFragmentInteractionListener {
+    MenuType menuType = MenuType.TASK_LIST;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +32,16 @@ public class MainActivity extends ActionBarActivity implements TaskListFragment.
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        switch (this.menuType) {
+            case TASK_LIST:
+                getMenuInflater().inflate(R.menu.menu_main, menu);
+                return true;
+            case TASK_FORM:
+                getMenuInflater().inflate(R.menu.menu_task_form, menu);
+                return true;
+            default:
+                return true;
+        }
     }
 
     @Override
@@ -46,6 +55,11 @@ public class MainActivity extends ActionBarActivity implements TaskListFragment.
         }
     }
 
+    public void refreshOptionsMenu(MenuType menuType) {
+        this.menuType = menuType;
+        invalidateOptionsMenu();
+    }
+
     public void switchFragmentTo(Fragment fragment) {
         getFragmentManager().beginTransaction()
                 .replace(R.id.container, fragment)
@@ -57,6 +71,7 @@ public class MainActivity extends ActionBarActivity implements TaskListFragment.
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
+            refreshOptionsMenu(MenuType.TASK_LIST);
         } else {
             super.onBackPressed();
         }
@@ -81,5 +96,11 @@ public class MainActivity extends ActionBarActivity implements TaskListFragment.
     @Subscribe
     public void onTaskFormSubmitted(TaskFormFragment.OnSubmitted event) {
         getFragmentManager().popBackStack();
+        refreshOptionsMenu(MenuType.TASK_LIST);
+    }
+
+    @Subscribe
+    public void onTaskFormShown(TaskFormFragment.OnShown event) {
+        refreshOptionsMenu(MenuType.TASK_FORM);
     }
 }

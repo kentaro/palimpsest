@@ -34,17 +34,17 @@ public class Task extends Model {
         return this.title == "";
     }
 
-    public static List<Task> todoList() {
+    public static List<Task> taskList() {
         List<Task> tasks = new Select().from(Task.class).execute();
-        List<Task> todoList = new ArrayList<Task>();
+        List<Task> taskList = new ArrayList<Task>();
 
         for (Task task : tasks) {
             if (task.currentCount() > 0) {
-                todoList.add(task);
+                taskList.add(task);
             }
         }
 
-        return todoList;
+        return taskList;
     }
 
     public Integer currentCount() {

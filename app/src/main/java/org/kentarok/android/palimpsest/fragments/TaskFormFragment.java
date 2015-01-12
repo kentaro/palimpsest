@@ -44,6 +44,8 @@ public class TaskFormFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_task_form, container, false);
         ButterKnife.inject(this, view);
+        BusHolder.getInstance().post(new OnShown());
+
         return view;
     }
 
@@ -75,6 +77,6 @@ public class TaskFormFragment extends Fragment {
         BusHolder.getInstance().post(new OnSubmitted());
     }
 
-    public class OnSubmitted {
-    }
+    public class OnSubmitted {}
+    public class OnShown {}
 }
