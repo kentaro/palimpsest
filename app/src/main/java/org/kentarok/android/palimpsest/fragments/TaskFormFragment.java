@@ -13,10 +13,16 @@ import org.kentarok.android.palimpsest.models.Task;
 import org.kentarok.android.palimpsest.utils.BusHolder;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class TaskFormFragment extends Fragment {
-    public Task task;
+    Task task;
+
+    @InjectView(R.id.task_form_edit_title)
+    EditText titleEdit;
+    @InjectView(R.id.task_form_edit_count)
+    EditText countEdit;
 
     public static TaskFormFragment newInstance(Task task) {
         TaskFormFragment fragment = new TaskFormFragment();
@@ -42,6 +48,12 @@ public class TaskFormFragment extends Fragment {
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
+
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
     }
@@ -53,9 +65,7 @@ public class TaskFormFragment extends Fragment {
 
     @OnClick(R.id.task_form_button_submit)
     public void submit() {
-        EditText titleEdit = (EditText)getView().findViewById(R.id.task_form_edit_title);
         String title = titleEdit.getText().toString();
-        EditText countEdit = (EditText)getView().findViewById(R.id.task_form_edit_count);
         Integer count = Integer.parseInt(countEdit.getText().toString());
 
         task.title = title;
