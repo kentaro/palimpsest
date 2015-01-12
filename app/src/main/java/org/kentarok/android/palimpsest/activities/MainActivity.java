@@ -46,7 +46,17 @@ public class MainActivity extends ActionBarActivity implements TaskListFragment.
     public void switchFragmentTo(Fragment fragment) {
         getFragmentManager().beginTransaction()
                 .replace(R.id.container, fragment)
+                .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
