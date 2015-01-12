@@ -62,7 +62,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void switchFragmentTo(Fragment fragment) {
         getFragmentManager().beginTransaction()
-                .replace(R.id.container, fragment)
+                .add(R.id.container, fragment)
                 .addToBackStack(null)
                 .commit();
     }
@@ -90,7 +90,13 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Subscribe
-    public void onTaskFormSubmitted(TaskFormFragment.OnSubmitted event) {
+    public void onTaskCreated(TaskFormFragment.OnCreated event) {
+        getFragmentManager().popBackStack();
+        refreshOptionsMenu(MenuType.TASK_LIST);
+    }
+
+    @Subscribe
+    public void onTaskUpdated(TaskFormFragment.OnUpdated event) {
         getFragmentManager().popBackStack();
         refreshOptionsMenu(MenuType.TASK_LIST);
     }

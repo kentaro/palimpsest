@@ -37,7 +37,7 @@ public class Task extends Model {
     }
 
     public static List<Task> taskList() {
-        List<Task> tasks = new Select().from(Task.class).execute();
+        List<Task> tasks = new Select().from(Task.class).orderBy("id DESC").execute();
         List<Task> taskList = new ArrayList<Task>();
 
         for (Task task : tasks) {

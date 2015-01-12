@@ -69,19 +69,34 @@ public class TaskFormFragment extends Fragment {
 
     @OnClick(R.id.task_form_button_submit)
     public void submit() {
+        Boolean isNewObject = false;
         String title = titleEdit.getText().toString();
         Integer count = Integer.parseInt(countEdit.getText().toString());
 
         task.title = title;
         task.count = count;
         if (task.createdOn == null) {
+            isNewObject = true;
             task.createdOn = new Date();
         }
         task.save();
 
-        BusHolder.getInstance().post(new OnSubmitted());
+        BusHolder.getInstance().post(
+                isNewObject ? new OnCreated(task) : new OnUpdated(task)
+        );
     }
 
-    public class OnSubmitted {}
+    public class OnCreated {
+        public Task task;
+        public OnCreated(Task task) {
+            this.task = task;
+        }
+    }
+    public class OnUpdated {
+        public Task task;
+        public OnUpdated(Task task) {
+            this.task = task;
+        }
+    }
     public class OnShown {}
 }

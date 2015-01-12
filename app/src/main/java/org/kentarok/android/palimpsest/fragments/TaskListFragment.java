@@ -8,8 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.squareup.otto.Subscribe;
+
 import org.kentarok.android.palimpsest.R;
 import org.kentarok.android.palimpsest.models.Task;
+import org.kentarok.android.palimpsest.utils.BusHolder;
 
 public class TaskListFragment extends ListFragment {
     public ArrayAdapter<Task> adapter;
@@ -25,7 +28,7 @@ public class TaskListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ArrayAdapter<Task> adapter = (new ArrayAdapter<Task>(getActivity(), R.layout.fragment_task_list, Task.taskList()){
+        this.adapter = (new ArrayAdapter<Task>(getActivity(), R.layout.fragment_task_list, Task.taskList()){
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -48,5 +51,28 @@ public class TaskListFragment extends ListFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        BusHolder.getInstance().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        BusHolder.getInstance().unregister(this);
+        super.onStop();
+    }
+
+    @Subscribe
+    public void onTaskCreated(TaskFormFragment.OnCreated event) {
+        this.adapter.insert(event.task, 0);
+        this.adapter.notifyDataSetInvalidated();
+    }
+
+    @Subscribe
+    public void onTaskUpdated(TaskFormFragment.OnUpdated event) {
+        this.adapter.notifyDataSetInvalidated();
     }
 }
