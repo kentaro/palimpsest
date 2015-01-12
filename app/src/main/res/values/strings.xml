@@ -6,5 +6,6 @@
     <string name="task_form_label_title">タスク</string>
     <string name="task_form_label_count">回数</string>
     <string name="task_form_button_submit">登録</string>
+    <string name="task_list_empty">タスクが空っぽです</string>
 
 </resources>
