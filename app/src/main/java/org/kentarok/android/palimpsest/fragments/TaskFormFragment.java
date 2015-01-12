@@ -49,7 +49,7 @@ public class TaskFormFragment extends Fragment {
         BusHolder.getInstance().post(new OnShownEvent());
 
         titleEdit.setText(this.task.title);
-        countEdit.setText(this.task.count.toString());
+        countEdit.setText(this.task.count != null ? this.task.count.toString() : null);
 
         return view;
     }

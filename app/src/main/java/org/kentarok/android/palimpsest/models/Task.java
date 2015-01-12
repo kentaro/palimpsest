@@ -52,7 +52,14 @@ public class Task extends Model {
 
     public Integer currentCount() {
         Date today = new Date();
-        Date before = this.doneOn == null ? this.createdOn : this.doneOn;
-        return this.count * today.compareTo(before);
+        Integer duration;
+
+        if (this.doneOn == null) {
+            duration = today.compareTo(this.createdOn);
+        } else {
+            duration = today.compareTo(this.doneOn) - 1;
+        }
+
+        return this.count * duration;
     }
 }
