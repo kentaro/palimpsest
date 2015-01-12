@@ -2,8 +2,9 @@
 <resources>
 
     <string name="app_name">Palimpsest</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_add">追加</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="task_form_label_title">タスク</string>
+    <string name="task_form_label_count">回数</string>
+    <string name="task_form_button_submit">登録</string>
 
 </resources>

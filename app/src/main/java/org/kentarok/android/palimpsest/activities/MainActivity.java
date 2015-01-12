@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import org.kentarok.android.palimpsest.R;
 import org.kentarok.android.palimpsest.fragments.TaskFormFragment;
 import org.kentarok.android.palimpsest.fragments.TaskListFragment;
+import org.kentarok.android.palimpsest.models.Task;
 import org.kentarok.android.palimpsest.utils.BusHolder;
 
 public class MainActivity extends ActionBarActivity implements TaskListFragment.OnFragmentInteractionListener {
@@ -36,7 +37,7 @@ public class MainActivity extends ActionBarActivity implements TaskListFragment.
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                switchFragmentTo((Fragment)TaskFormFragment.newInstance());
+                switchFragmentTo((Fragment)TaskFormFragment.newInstance(new Task()));
                 return true;
             default:
                 return true;

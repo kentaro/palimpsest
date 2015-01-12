@@ -12,8 +12,8 @@ import java.util.List;
 @Table(name = "tasks")
 public class Task extends Model {
 
-    @Column(name = "name")
-    public String name;
+    @Column(name = "title")
+    public String title;
     @Column(name = "count")
     public Integer count;
     @Column(name = "done_on")
@@ -23,11 +23,15 @@ public class Task extends Model {
         super();
     }
 
-    public Task(String name, Integer count, Date doneOn) {
+    public Task(String title, Integer count, Date doneOn) {
         super();
-        this.name = name;
+        this.title = title;
         this.count = count;
         this.doneOn = doneOn;
+    }
+
+    public boolean isEmpty() {
+        return this.title == "";
     }
 
     public static List<Task> todoList() {
